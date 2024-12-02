@@ -1,4 +1,3 @@
-
 function Client_PresentConfigureUI(rootParent)
 	local initialValue = Mod.Settings.CostPerNeutralArmy;
 	if initialValue == nil then
