@@ -6,8 +6,6 @@ function Client_PresentMenuUI(rootParent, setMaxSize, setScrollable, game)
 		return;
 	end
 	
-	local publicGameData = Mod.PublicGameData --!Check
-	
 	Game = game;
 	SubmitBtn = nil;
 	
@@ -106,13 +104,11 @@ function SubmitClicked()
 
 	local msg = 'Modifying ' .. SelectedTerritory.Name;
 
-	local payload = 'GMTool_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID;
+	local payload = 'GiftArmies2_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID;
 
 	local orders = Game.Orders;
 	table.insert(orders, WL.GameOrderCustom.Create(Game.Us.ID, msg, payload));
 	Game.Orders = orders;
 	
-	
- 	--publicGameData.name = Game.Game.Players[ID].DisplayName(nil, false) --!Check 
- 	--Mod.PublicGameData = publicGameData
+
 end
