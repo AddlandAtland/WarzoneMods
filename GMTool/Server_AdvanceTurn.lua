@@ -19,13 +19,13 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		end 
 		
 		--add armies to the source territory
-		local addFromSource = WL.TerritoryModification.Create(targetTerritoryID);
-		addFromSource.SetArmiesTo = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.NumArmies + numArmies;
+		local targetModifier = WL.TerritoryModification.Create(targetTerritoryID);
+		targetModifier.SetArmiesTo = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.NumArmies + numArmies;
 
 		--Change ownership
-		addFromSource.SetOwnerOpt = targetPlayerID;
+		targetModifier.SetOwnerOpt = targetPlayerID;
 
-		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {addFromSource}, nil, nil));
+		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, nil));
 
 		skipThisOrder(WL.ModOrderControl.SkipAndSupressSkippedMessage); --we replaced the GameOrderCustom with a GameOrderEvent, so get rid of the custom order.  There wouldn't be any harm in leaving it there, but it adds clutter to the orders list so it's better to get rid of it.
 	end
