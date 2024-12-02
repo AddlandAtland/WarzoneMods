@@ -91,11 +91,11 @@ function CheckCreateFinalStep()
 		local row3 = UI.CreateHorizontalLayoutGroup(vert);
 		UI.CreateLabel(row3).SetText("Army value modifier: ");
 		NumArmiesInput = UI.CreateNumberInputField(row3)
-			.SetSliderMinValue(0)  -- Fixed minimum value
-        		.SetSliderMaxValue(10) -- Fixed maximum value
+			.SetSliderMinValue(-15)  -- Fixed minimum value
+        		.SetSliderMaxValue(15) -- Fixed maximum value
         		.SetValue(0);          -- Default to 0
 
-		SubmitBtn = UI.CreateButton(vert).SetText("Gift").SetOnClick(SubmitClicked);
+		SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
 	
 	end
 
@@ -106,7 +106,7 @@ function SubmitClicked()
 
 	local msg = 'Modifying ' .. SelectedTerritory.Name;
 
-	local payload = 'GiftArmies2_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID;
+	local payload = 'GMTool_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID;
 
 	local orders = Game.Orders;
 	table.insert(orders, WL.GameOrderCustom.Create(Game.Us.ID, msg, payload));
