@@ -1,4 +1,4 @@
 function Client_SaveConfigureUI(alert)
     
-    Mod.Settings.GMosID = numberInputField.GetValue();
+    Mod.Settings.CostPerNeutralArmy = numberInputField.GetValue();
 end
