@@ -2,7 +2,7 @@ require('Utilities');
 
 function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrder)
 
-    local gmos = Mod.Settings.CostPerNeutralArmy 
+    local GMosID = Mod.Settings.GMosID 
 
     if (order.proxyType == 'GameOrderCustom' and startsWith(order.Payload, 'GMTool_')) then  --look for the order that we inserted in Client_PresentMenuUI
 
@@ -13,7 +13,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		local targetPlayerID = tonumber(payloadSplit[3]);
 		
 		--check for host
-		if (order.PlayerID ~= gmos) then
+		if (order.PlayerID ~= GMosID) then
 			skipThisOrder(WL.ModOrderControl.Skip);
 			return;
 		end 
