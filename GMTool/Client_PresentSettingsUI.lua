@@ -1,4 +1,4 @@
 function Client_PresentSettingsUI(rootParent)
 	UI.CreateLabel(rootParent)
-		.SetText('Cost per neutral army = ' .. Mod.Settings.CostPerNeutralArmy);
+		.SetText('Host ID: ' .. Mod.Settings.GMosID);
 end
