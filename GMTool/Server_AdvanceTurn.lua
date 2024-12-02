@@ -2,7 +2,7 @@ require('Utilities');
 
 function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrder)
 
-    local gmos = Mod.Settings.CostPerNeutralArmy
+    local gmos = Mod.Settings.GMosID
 
     if (order.proxyType == 'GameOrderCustom' and startsWith(order.Payload, 'GiftArmies2_')) then  --look for the order that we inserted in Client_PresentMenuUI
 
