@@ -2,9 +2,9 @@ require('Utilities');
 
 function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrder)
 
-    local gmos = Mod.Settings.CostPerNeutralArmy
+    local gmos = Mod.Settings.CostPerNeutralArmy 
 
-    if (order.proxyType == 'GameOrderCustom' and startsWith(order.Payload, 'GiftArmies2_')) then  --look for the order that we inserted in Client_PresentMenuUI
+    if (order.proxyType == 'GameOrderCustom' and startsWith(order.Payload, 'GMTool_')) then  --look for the order that we inserted in Client_PresentMenuUI
 
 		--in Client_PresentMenuUI, we comma-delimited the number of armies, the target territory ID, and the target player ID.  Break it out here
 		local payloadSplit = split(string.sub(order.Payload, 13), ','); 
@@ -12,18 +12,18 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		local targetTerritoryID = tonumber(payloadSplit[2]);
 		local targetPlayerID = tonumber(payloadSplit[3]);
 		
-		--host check
+		--check for host
 		if (order.PlayerID ~= gmos) then
 			skipThisOrder(WL.ModOrderControl.Skip);
 			return;
 		end 
 		
 		--add armies to the source territory
-		local addFromSource = WL.TerritoryModification.Create(targetTerritoryID);
-		addFromSource.SetArmiesTo = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.NumArmies + numArmies;
+		local targetModifier = WL.TerritoryModification.Create(targetTerritoryID);
+		targetModifier.SetArmiesTo = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.NumArmies + numArmies;
 
-		--Change ownership
-		addFromSource.SetOwnerOpt = targetPlayerID;
+		--change ownership
+		targetModifier.SetOwnerOpt = targetPlayerID;
 
 		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {addFromSource}, nil, nil));
 
