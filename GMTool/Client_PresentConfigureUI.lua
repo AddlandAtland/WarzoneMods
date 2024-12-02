@@ -8,7 +8,7 @@ function Client_PresentConfigureUI(rootParent)
 	UI.CreateLabel(horz).SetText('Set the Host ID');
     numberInputField = UI.CreateNumberInputField(horz)
 		.SetSliderMinValue(0)
-		.SetSliderMaxValue(1000)
-		.SetValue(initialValue);
+		.SetSliderMaxValue(100)
+		.SetValue(num);
 
 end
