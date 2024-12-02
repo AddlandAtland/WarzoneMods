@@ -6,8 +6,6 @@ function Client_PresentMenuUI(rootParent, setMaxSize, setScrollable, game)
 		return;
 	end
 	
-	local publicGameData = Mod.PublicGameData --!Check
-	
 	Game = game;
 	SubmitBtn = nil;
 	
@@ -44,7 +42,7 @@ function TargetPlayerClicked()
             		CheckCreateFinalStep();
         	end
     	});
-	UI.PromptFromList("Select the player you'd like to give the territory to", options);
+	UI.PromptFromList("Select the player you'd like to give this territory to", options);
 end
 
 function PlayerButton(player)
@@ -62,7 +60,7 @@ end
 
 function TargetTerritoryClicked()
 	UI.InterceptNextTerritoryClick(TerritoryClicked);
-	TargetTerritoryInstructionLabel.SetText("Please click on the territory you wish to modify.  If needed, you can move this dialog out of the way.");
+	TargetTerritoryInstructionLabel.SetText("Please click on the territory you wish to modify. If needed, you can move this dialog out of the way.");
 	TargetTerritoryBtn.SetInteractable(false);
 end
 
@@ -91,11 +89,11 @@ function CheckCreateFinalStep()
 		local row3 = UI.CreateHorizontalLayoutGroup(vert);
 		UI.CreateLabel(row3).SetText("Army value modifier: ");
 		NumArmiesInput = UI.CreateNumberInputField(row3)
-			.SetSliderMinValue(0)  -- Fixed minimum value
+			.SetSliderMinValue(-10)  -- Fixed minimum value
         		.SetSliderMaxValue(10) -- Fixed maximum value
         		.SetValue(0);          -- Default to 0
 
-		SubmitBtn = UI.CreateButton(vert).SetText("Gift").SetOnClick(SubmitClicked);
+		SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
 	
 	end
 
@@ -106,13 +104,10 @@ function SubmitClicked()
 
 	local msg = 'Modifying ' .. SelectedTerritory.Name;
 
-	local payload = 'GiftArmies2_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID;
+	local payload = 'GMTool_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID;
 
 	local orders = Game.Orders;
 	table.insert(orders, WL.GameOrderCustom.Create(Game.Us.ID, msg, payload));
 	Game.Orders = orders;
 	
-	
- 	--publicGameData.name = Game.Game.Players[ID].DisplayName(nil, false) --!Check 
- 	--Mod.PublicGameData = publicGameData
 end
