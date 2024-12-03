@@ -44,12 +44,6 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
     			end
 		end
 
-    addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
-                                         "Special units ownership transferred",
-                                         nil,
-                                         {terrMod}))
-end
-
 		--clear SU when neutralizing
 		if (SU ~= nil and targetPlayerID == WL.PlayerID.Neutral) then
 			for _, v in pairs(SU) do
