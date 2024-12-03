@@ -25,6 +25,13 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--Change ownership
 		targetModifier.SetOwnerOpt = targetPlayerID;
 
+		--clear SU
+		local SU = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.SpecialUnits
+		if (SU ~= nil) then
+			targetModifier.RemoveSpecialUnitsOpt = {v.ID}
+			return;
+		end 
+			
 		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, nil));
 
 		skipThisOrder(WL.ModOrderControl.SkipAndSupressSkippedMessage); --we replaced the GameOrderCustom with a GameOrderEvent, so get rid of the custom order.  There wouldn't be any harm in leaving it there, but it adds clutter to the orders list so it's better to get rid of it.
