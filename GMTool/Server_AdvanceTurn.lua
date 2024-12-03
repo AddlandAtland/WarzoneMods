@@ -32,15 +32,12 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
     			local terrMod = WL.TerritoryModification.Create(targetTerritoryID)
     			terrMod.RemoveSpecialUnitsOpt = {}
     			terrMod.AddSpecialUnits = {}
-
-			for _, v in pairs(SU) do
-        		-- Only process custom special units
-        			if v.proxyType == "CustomSpecialUnit" then
-            				local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v) -- Clone the unit
-            				builder.OwnerID = targetPlayerID -- Update ownership
-            				table.insert(terrMod.RemoveSpecialUnitsOpt, v.ID) -- Queue the original unit for removal
-            				table.insert(terrMod.AddSpecialUnits, builder.Build()) -- Add the updated unit
-        			end
+			
+    			for _, v in pairs(SU) do
+        			local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
+        			builder.OwnerID = targetPlayerID -- Update ownership
+        			table.insert(terrMod.RemoveSpecialUnitsOpt, v.ID) -- Remove the old unit
+        			table.insert(terrMod.AddSpecialUnits, builder.Build()) -- Add the updated unit
     			end
 		end
 
