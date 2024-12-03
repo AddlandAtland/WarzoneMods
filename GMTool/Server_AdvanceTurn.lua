@@ -21,12 +21,20 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--add armies to the source territory
 		local targetModifier = WL.TerritoryModification.Create(targetTerritoryID);
 		targetModifier.SetArmiesTo = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.NumArmies + numArmies;
-
-		--Change ownership
-		targetModifier.SetOwnerOpt = targetPlayerID;
-
-		--clear SU
+		
+		--define SU marker
 		local SU = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.SpecialUnits
+		
+		--change territory ownership
+		targetModifier.SetOwnerOpt = targetPlayerID;
+		--handover SU ownership
+		if (SU ~= nil and targetPlayerID ~= WL.PlayerID.Neutral) then
+			for _, v in pairs(SU) do
+    				SU.OwnerID = targetPlayerID
+			end
+		end 
+
+		--clear SU when neutralizing
 		if (SU ~= nil and targetPlayerID == WL.PlayerID.Neutral) then
 			for _, v in pairs(SU) do
     				targetModifier.RemoveSpecialUnitsOpt = {v.ID}
