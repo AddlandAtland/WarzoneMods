@@ -30,7 +30,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--handover SU ownership
 		if (SU ~= nil and targetPlayerID ~= WL.PlayerID.Neutral) then
 			for _, v in pairs(SU) do
-    				SU.OwnerID = targetPlayerID
+    				game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.SpecialUnits.OwnerID = targetPlayerID
 			end
 		end 
 
