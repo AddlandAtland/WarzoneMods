@@ -28,7 +28,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID;
 		--handover SU ownership
-		if (SU ~= nil) then
+		if (SU ~= nil and targetPlayerID ~= WL.PlayerID.Neutral) then
 			SU.OwnerID = targetPlayerID
 		end 
 
