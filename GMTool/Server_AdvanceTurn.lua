@@ -28,9 +28,27 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID;
 		--handover SU ownership
-		if (SU ~= nil and targetPlayerID ~= WL.PlayerID.Neutral) then
-			SU.OwnerID = targetPlayerID
-		end 
+if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
+    local terrMod = WL.TerritoryModification.Create(targetTerritoryID)
+    terrMod.RemoveSpecialUnitsOpt = {}
+    terrMod.AddSpecialUnits = {}
+
+    for _, v in pairs(SU) do
+        -- Only process custom special units
+        if v.proxyType == "CustomSpecialUnit" then
+            local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v) -- Clone the unit
+            builder.OwnerID = targetPlayerID -- Update ownership
+            table.insert(terrMod.RemoveSpecialUnitsOpt, v.ID) -- Queue the original unit for removal
+            table.insert(terrMod.AddSpecialUnits, builder.Build()) -- Add the updated unit
+        end
+    end
+end
+
+    addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
+                                         "Special units ownership transferred",
+                                         nil,
+                                         {terrMod}))
+end
 
 		--clear SU when neutralizing
 		if (SU ~= nil and targetPlayerID == WL.PlayerID.Neutral) then
