@@ -28,8 +28,9 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--clear SU
 		local SU = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.SpecialUnits
 		if (SU ~= nil) then
-			targetModifier.RemoveSpecialUnitsOpt = {v.ID}
-			return;
+			for _, v in pairs(SU) do
+    				targetModifier.RemoveSpecialUnitsOpt = {v.ID}
+			end
 		end 
 			
 		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, nil));
