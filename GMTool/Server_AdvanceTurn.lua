@@ -28,17 +28,35 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID;
 		--handover SU ownership
-		if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
-    			local terrMod = WL.TerritoryModification.Create(targetTerritoryID)
-    			terrMod.RemoveSpecialUnitsOpt = {}
-    			terrMod.AddSpecialUnits = {}
-			
-    			for _, v in pairs(SU) do
-        			local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
-        			builder.OwnerID = targetPlayerID -- Update ownership
-        			table.insert(terrMod.RemoveSpecialUnitsOpt, v.ID) -- Remove the old unit
-        			table.insert(terrMod.AddSpecialUnits, builder.Build()) -- Add the updated unit
-    			end
+if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
+    local terrMod = WL.TerritoryModification.Create(targetTerritoryID)
+    terrMod.RemoveSpecialUnitsOpt = {}
+    terrMod.AddSpecialUnits = {}
+
+    for _, v in pairs(SU) do
+        if v.proxyType == "CustomSpecialUnit" then
+            local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
+
+            -- Update ownership
+            builder.OwnerID = targetPlayerID
+            
+            -- Update unit's ModData, if necessary
+            if v.ModData and startsWith(v.ModData, modSign(0)) then
+                local payloadSplit = split(string.sub(v.ModData, 5), ';;')
+                local transfer = tonumber(payloadSplit[2]) or 0
+                
+                -- Adjust transfer count if needed
+                if transfer > 0 then
+                    transfer = transfer - 1
+                    builder.ModData = modSign(0) .. payloadSplit[1] .. ';;' .. transfer .. ';;' .. table.concat(payloadSplit, ';;', 3)
+                end
+            end
+
+            -- Queue unit removal and add updated unit
+            table.insert(terrMod.RemoveSpecialUnitsOpt, v.ID)
+            table.insert(terrMod.AddSpecialUnits, builder.Build())
+        end
+    end
 		end
 
 		--clear SU when neutralizing
