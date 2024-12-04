@@ -29,9 +29,8 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		targetModifier.SetOwnerOpt = targetPlayerID;
 		--handover SU ownership
 if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
-    local terrMod = WL.TerritoryModification.Create(targetTerritoryID)
-    terrMod.RemoveSpecialUnitsOpt = {}
-    terrMod.AddSpecialUnits = {}
+    targetModifier.RemoveSpecialUnitsOpt = {}
+    targetModifier.AddSpecialUnits = {}
 
     for _, v in pairs(SU) do
         if v.proxyType == "CustomSpecialUnit" then
@@ -53,8 +52,8 @@ if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
             end
 
             -- Queue unit removal and add updated unit
-            table.insert(terrMod.RemoveSpecialUnitsOpt, v.ID)
-            table.insert(terrMod.AddSpecialUnits, builder.Build())
+            table.insert(targetModifier.RemoveSpecialUnitsOpt, v.ID)
+            table.insert(targetModifier.AddSpecialUnits, builder.Build())
         end
     end
 		end
