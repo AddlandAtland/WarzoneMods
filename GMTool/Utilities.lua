@@ -80,3 +80,14 @@ end
 function startsWith(str, sub)
 	return string.sub(str, 1, string.len(sub)) == sub;
 end
+
+--modSign from Yamada's mod
+function modSign(mode)
+    if mode == 0 then
+        return "C&PE"
+    elseif mode == 1 then
+        return {
+            "Soldier","Commander","Artillery","Machine Gun","Tank","Random"
+        }
+    end
+end
