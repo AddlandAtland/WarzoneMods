@@ -56,8 +56,10 @@ if SU ~= nil and #SU > 0 then
         end
     end
 
+    local msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID;
+			
     addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
-                                         "Special units transferred",
+                                         msg,
                                          nil,
                                          {targetModifier}))
 end
