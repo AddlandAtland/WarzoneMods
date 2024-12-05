@@ -51,7 +51,7 @@ if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
             		targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
             		targetSUTransfer.AddSpecialUnits = {builder.Build()}
 			
-	    		message = 'Transferring SU from '.. v.OwnerID .. ' to ' .. builder.OwnerID;
+	    		message = 'Transferring SU from '.. v.OwnerID .. ' to ' .. builder.OwnerID .. v.ModData;
 			addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
                 		message,
                         	nil,
