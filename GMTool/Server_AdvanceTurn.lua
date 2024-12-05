@@ -11,7 +11,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		local numArmies = tonumber(payloadSplit[1])
 		local targetTerritoryID = tonumber(payloadSplit[2]);
 		local targetPlayerID = tonumber(payloadSplit[3]);
-		
+local msg = "" --checkthis!
 		--host check
 		if (order.PlayerID ~= gmos) then
 			skipThisOrder(WL.ModOrderControl.Skip);
@@ -55,7 +55,7 @@ if SU ~= nil and #SU > 0 then
             --table.insert(targetModifier.AddSpecialUnits, builder.Build())
         end
 
-	local msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID;
+	msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID;
 
     end
 			
