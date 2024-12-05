@@ -75,9 +75,14 @@ end
 		
 --clear cities when neutralizing
 if targetPlayerID == WL.PlayerID.Neutral then
-	local cities = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].Structures
-	cities[WL.StructureType.City] = 0
-	targetModifier.SetStructuresOpt = cites
+    	-- Safely retrieve or initialize the Structures table
+    	local cities = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].Structures or {}
+    	
+    	-- Check if the city structure exists before modifying
+    	cities[WL.StructureType.City] = 0
+	
+    	-- Apply the modification
+    	targetModifier.SetStructuresOpt = cities
 end
 
 		--change territory ownership
