@@ -54,9 +54,10 @@ if SU ~= nil and #SU > 0 then
             table.insert(targetModifier.RemoveSpecialUnitsOpt, v.ID)
             --table.insert(targetModifier.AddSpecialUnits, builder.Build())
         end
-    end
 
-    local msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID;
+	local msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID;
+
+    end
 			
     addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
                                          msg,
