@@ -29,7 +29,7 @@ local msg = "" --checkthis!
 		targetModifier.SetOwnerOpt = targetPlayerID
 
 -- Handover special unit ownership
-if SU ~= nil and #SU > 0 then
+if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
     for _, v in pairs(SU) do
         if v.proxyType == "CustomSpecialUnit" then
             local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
@@ -55,10 +55,10 @@ if SU ~= nil and #SU > 0 then
         end
     end
 			
-    addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
-                                         msg,
-                                         nil,
-                                         {targetModifier}))
+    --addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
+                                         --msg,
+                                         --nil,
+                                         --{targetModifier}))]
 end
 
 		--clear SU when neutralizing
