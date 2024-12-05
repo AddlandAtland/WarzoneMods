@@ -57,7 +57,7 @@ if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
 	addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
                 	msg,
                         nil,
-                        {targetSUTransfer}))]
+                        {targetSUTransfer}))
     end
 end
 
