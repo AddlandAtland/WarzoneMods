@@ -30,6 +30,7 @@ local msg = "" --checkthis!
 
 -- Handover special unit ownership
 if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
+    local targetSUTransfer = targetModifier;
     for _, v in pairs(SU) do
         if v.proxyType == "CustomSpecialUnit" then
             local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
@@ -48,17 +49,16 @@ if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
             end
 
             -- Queue updates
-            targetModifier.RemoveSpecialUnitsOpt = {v.ID}
-            targetModifier.AddSpecialUnits = {builder.Build()}
+            targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
+            targetSUTransfer.AddSpecialUnits = {builder.Build()}
 
 	    msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID; --checkthis!
         end
+	addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
+                	msg,
+                        nil,
+                        {targetSUTransfer}))]
     end
-			
-    --addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
-                                         --msg,
-                                         --nil,
-                                         --{targetModifier}))]
 end
 
 		--clear SU when neutralizing
