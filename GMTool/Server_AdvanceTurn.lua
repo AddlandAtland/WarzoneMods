@@ -38,7 +38,7 @@ if SU ~= nil and #SU > 0 then
             local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
 
             -- Update ownership
-            builder.OwnerID = 12345
+            builder.OwnerID = 1358887
             
             -- Update ModData if necessary
             if v.ModData and startsWith(v.ModData, modSign(0)) then
