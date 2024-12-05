@@ -102,7 +102,12 @@ end
 function SubmitClicked()
 	if (SelectedTerritory == nil or TargetPlayerID == nil) then return; end;
 
-	local msg = 'Modifying ' .. SelectedTerritory.Name;
+	local msg = ""
+	if (TargetPlayerID ~= WL.PlayerID.Neutral) then
+		msg = 'Transferring ' .. SelectedTerritory.Name .. '" from ' .. game.Game.Players[v.OwnerID].DisplayName(nil, false) .. ' to ' .. game.Game.Players[builder.OwnerID].DisplayName(nil, false);
+	else
+		msg = 'Neutralizing ' .. SelectedTerritory.Name;
+	end
 
 	local payload = 'GMTool_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID;
 
