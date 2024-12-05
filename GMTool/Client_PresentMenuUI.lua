@@ -104,7 +104,7 @@ function SubmitClicked()
 
 	local msg = ""
 	if (TargetPlayerID ~= WL.PlayerID.Neutral) then
-		msg = 'Transferring ' .. SelectedTerritory.Name;
+		msg = 'Modifying ' .. SelectedTerritory.Name;
 	else
 		msg = 'Neutralizing ' .. SelectedTerritory.Name;
 	end
