@@ -72,6 +72,12 @@ if SU ~= nil and #SU > 0  and targetPlayerID == WL.PlayerID.Neutral then
                         {targetSUTransfer}))
     	end
 end
+		
+--clear cities when neutralizing
+if targetPlayerID == WL.PlayerID.Neutral then
+	local cities = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].Structures
+	cities[WL.StructureType.City] = 0
+	targetModifier.SetStructuresOpt = cites
 
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID
