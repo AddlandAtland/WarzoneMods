@@ -55,7 +55,7 @@ if SU ~= nil and #SU > 0 then
             --table.insert(targetModifier.AddSpecialUnits, builder.Build())
         end
 
-	msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID;
+	msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:'; --.. builder.OwnerID;
 
     end
 			
