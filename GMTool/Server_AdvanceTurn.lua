@@ -52,7 +52,7 @@ if SU ~= nil and #SU > 0 then
 
             -- Queue updates
             table.insert(targetModifier.RemoveSpecialUnitsOpt, v.ID)
-            table.insert(targetModifier.AddSpecialUnits, builder.Build())
+            --table.insert(targetModifier.AddSpecialUnits, builder.Build())
         end
     end
 
