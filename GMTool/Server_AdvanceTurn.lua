@@ -78,6 +78,7 @@ if targetPlayerID == WL.PlayerID.Neutral then
 	local cities = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].Structures
 	cities[WL.StructureType.City] = 0
 	targetModifier.SetStructuresOpt = cites
+end
 
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID
