@@ -30,9 +30,6 @@ local msg = "" --checkthis!
 
 -- Handover special unit ownership
 if SU ~= nil and #SU > 0 then
-    targetModifier.RemoveSpecialUnitsOpt = {}
-    targetModifier.AddSpecialUnits = {}
-
     for _, v in pairs(SU) do
         if v.proxyType == "CustomSpecialUnit" then
             local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
@@ -51,8 +48,8 @@ if SU ~= nil and #SU > 0 then
             end
 
             -- Queue updates
-            table.insert(targetModifier.RemoveSpecialUnitsOpt, v.ID)
-            --table.insert(targetModifier.AddSpecialUnits, builder.Build())
+            targetModifier.RemoveSpecialUnitsOpt = v.ID
+            targetModifier.AddSpecialUnits = {builder.Build()}
 
 	    msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID; --checkthis!
         end
