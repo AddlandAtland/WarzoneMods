@@ -11,7 +11,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		local numArmies = tonumber(payloadSplit[1])
 		local targetTerritoryID = tonumber(payloadSplit[2]);
 		local targetPlayerID = tonumber(payloadSplit[3]);
-local msg = "" --checkthis!
+		local message = "" --checkthis!
 		--host check
 		if (order.PlayerID ~= gmos) then
 			skipThisOrder(WL.ModOrderControl.Skip);
@@ -35,10 +35,10 @@ if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
 	       	if v.proxyType == "CustomSpecialUnit" then
             		local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
 
-            		-- Update ownership
+            		--update ownership
             		builder.OwnerID = targetPlayerID
             
-            		-- Update ModData if necessary
+            		--update moddata
             		if v.ModData and startsWith(v.ModData, modSign(0)) then
                 		local payloadSplit = split(string.sub(v.ModData, 5), ';;')
                 		local transfer = tonumber(payloadSplit[2]) or 0
@@ -48,26 +48,32 @@ if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
                 		end
             		end
 
-            		-- Queue updates
             		targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
             		targetSUTransfer.AddSpecialUnits = {builder.Build()}
 			
-	    		msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID; --checkthis!
+	    		message = 'Transferring SU from '.. v.OwnerID .. ' to ' .. builder.OwnerID;
 			addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
-                		msg,
+                		message,
                         	nil,
                         	{targetSUTransfer}))
         	end
     	end
 end
 
-		--clear SU when neutralizing
-		if (SU ~= nil and targetPlayerID == WL.PlayerID.Neutral) then
-			for _, v in pairs(SU) do
-    				targetModifier.RemoveSpecialUnitsOpt = {v.ID}
-			end
-		end 
-
+--clear SU when neutralizing
+if SU ~= nil and #SU > 0  and targetPlayerID == WL.PlayerID.Neutral then
+    	local targetSUTransfer = WL.TerritoryModification.Create(targetTerritoryID);
+    	for _, v in pairs(SU) do
+            	targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
+			
+	    	message = 'Removing Special Units';
+		addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
+                	message,
+                        nil,
+                        {targetSUTransfer}))
+    	end
+end
+		
 		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, nil));
 
 		skipThisOrder(WL.ModOrderControl.SkipAndSupressSkippedMessage); --we replaced the GameOrderCustom with a GameOrderEvent, so get rid of the custom order.  There wouldn't be any harm in leaving it there, but it adds clutter to the orders list so it's better to get rid of it.
