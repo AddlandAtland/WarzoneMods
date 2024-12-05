@@ -56,6 +56,10 @@ if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
             table.insert(targetModifier.AddSpecialUnits, builder.Build())
         end
     end
+addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
+                                         "Special units transferred",
+                                         nil,
+                                         {targetModifier}))			
 		end
 
 		--clear SU when neutralizing
