@@ -104,7 +104,7 @@ function SubmitClicked()
 
 	local msg = ""
 	if (TargetPlayerID ~= WL.PlayerID.Neutral) then
-		msg = 'Transferring ' .. SelectedTerritory.Name .. '" from ' .. game.Game.Players[v.OwnerID].DisplayName(nil, false) .. ' to ' .. game.Game.Players[builder.OwnerID].DisplayName(nil, false);
+		msg = 'Transferring ' .. SelectedTerritory.Name .. '" from ' .. game.Game.Players[game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID].DisplayName(nil, false) .. ' to ' .. game.Game.Players[TargetPlayerID].DisplayName(nil, false);
 	else
 		msg = 'Neutralizing ' .. SelectedTerritory.Name;
 	end
