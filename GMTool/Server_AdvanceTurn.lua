@@ -35,9 +35,6 @@ if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
     for _, v in pairs(SU) do
         if v.proxyType == "CustomSpecialUnit" then
             local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
-
-            -- Update ownership
-            builder.OwnerID = targetPlayerID
             
             -- Update unit's ModData, if necessary
             if v.ModData and startsWith(v.ModData, modSign(0)) then
@@ -51,6 +48,9 @@ if SU ~= nil and #SU > 0 and targetPlayerID ~= WL.PlayerID.Neutral then
                 end
             end
 
+            -- Update ownership
+            builder.OwnerID = targetPlayerID
+					
             -- Queue unit removal and add updated unit
             table.insert(targetModifier.RemoveSpecialUnitsOpt, v.ID)
             table.insert(targetModifier.AddSpecialUnits, builder.Build())
