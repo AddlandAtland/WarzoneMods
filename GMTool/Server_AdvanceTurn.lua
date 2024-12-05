@@ -20,7 +20,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		
 		--add armies to the source territory
 		local targetModifier = WL.TerritoryModification.Create(targetTerritoryID);
-		targetModifier.AddArmies = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.NumArmies + numArmies;
+		targetModifier.AddArmies = numArmies;
 		
 		--define SU marker
 		local SU = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.SpecialUnits
