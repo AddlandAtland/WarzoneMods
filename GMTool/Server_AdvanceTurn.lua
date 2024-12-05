@@ -30,7 +30,7 @@ local msg = "" --checkthis!
 
 -- Handover special unit ownership
 if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
-    	local targetSUTransfer = targetModifier;
+    	local targetSUTransfer = WL.TerritoryModification.Create(targetTerritoryID);
     	for _, v in pairs(SU) do
 	       	if v.proxyType == "CustomSpecialUnit" then
             		local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
