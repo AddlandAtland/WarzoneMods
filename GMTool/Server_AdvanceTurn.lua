@@ -24,12 +24,9 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		
 		--define SU marker
 		local SU = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.SpecialUnits
-		
-		--change territory ownership
-		targetModifier.SetOwnerOpt = targetPlayerID
 
 -- Handover special unit ownership
-if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral then
+if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral and targetPlayerID ~= game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID then
     	local targetSUTransfer = WL.TerritoryModification.Create(targetTerritoryID);
     	for _, v in pairs(SU) do
 	       	if v.proxyType == "CustomSpecialUnit" then
@@ -75,6 +72,9 @@ if SU ~= nil and #SU > 0  and targetPlayerID == WL.PlayerID.Neutral then
                         {targetSUTransfer}))
     	end
 end
+
+		--change territory ownership
+		targetModifier.SetOwnerOpt = targetPlayerID
 		
 		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, nil));
 
