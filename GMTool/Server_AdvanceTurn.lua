@@ -48,7 +48,7 @@ if SU ~= nil and #SU > 0 then
             end
 
             -- Queue updates
-            targetModifier.RemoveSpecialUnitsOpt = v.ID
+            targetModifier.RemoveSpecialUnitsOpt = {v.ID}
             targetModifier.AddSpecialUnits = {builder.Build()}
 
 	    msg = 'Special Unit Owner Before: '.. v.OwnerID .. ' After:' .. builder.OwnerID; --checkthis!
