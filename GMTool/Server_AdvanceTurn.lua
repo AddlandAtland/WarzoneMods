@@ -11,6 +11,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		local numArmies = tonumber(payloadSplit[1])
 		local targetTerritoryID = tonumber(payloadSplit[2]);
 		local targetPlayerID = tonumber(payloadSplit[3]);
+		local numCities = tonumber(payloadSplit[4]);
 		local message = "" --checkthis!
 		--host check
 		if (order.PlayerID ~= gmos) then
@@ -72,7 +73,7 @@ if SU ~= nil and #SU > 0  and targetPlayerID == WL.PlayerID.Neutral then
                         {targetSUTransfer}))
     	end
 end
-		
+
 --clear cities when neutralizing
 if targetPlayerID == WL.PlayerID.Neutral then
     	-- Safely retrieve or initialize the Structures table
