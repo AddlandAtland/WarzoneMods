@@ -97,8 +97,8 @@ function CheckCreateFinalStep()
 		local row4 = UI.CreateHorizontalLayoutGroup(vert);
 		UI.CreateLabel(row4).SetText("Cities value modifier: ");
 		CitiesInput = UI.CreateNumberInputField(row4)
-			.SetSliderMinValue(-15)  -- Fixed minimum value
-        		.SetSliderMaxValue(15) -- Fixed maximum value
+			.SetSliderMinValue(-1)  -- Fixed minimum value
+        		.SetSliderMaxValue(4) -- Fixed maximum value
         		.SetValue(0);          -- Default to 0
 
 		SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
