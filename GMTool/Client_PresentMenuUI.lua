@@ -9,7 +9,7 @@ function Client_PresentMenuUI(rootParent, setMaxSize, setScrollable, game)
 	Game = game;
 	SubmitBtn = nil;
 	
-	setMaxSize(450, 400);
+	setMaxSize(450, 600);
 
 	vert = UI.CreateVerticalLayoutGroup(rootParent);
 
