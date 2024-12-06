@@ -94,7 +94,7 @@ end
 		if incomeMod ~= 0 and targetPlayerID ~= WL.PlayerID.Neutral then
 			incomeMod = WL.IncomeMod.Create(targetPlayerID, numIncome, 'Income added to ' .. game.Game.Players[targetPlayerID].DisplayName(nil, false));
 		else
-			incomeMod = {}
+			incomeMod = nil
 		end
 		
 		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, {incomeMod}));
