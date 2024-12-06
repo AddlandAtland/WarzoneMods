@@ -111,7 +111,7 @@ function SubmitClicked()
 
 	local msg = ""
 	if (TargetPlayerID ~= WL.PlayerID.Neutral) then
-		msg = 'Modifying ' .. SelectedTerritory.Name  .. ' New Owner: ' .. game.Game.Players[TargetPlayerID].DisplayName(nil, false);
+		msg = 'Modifying ' .. SelectedTerritory.Name  .. ' New Owner: ' .. Game.Game.Players[TargetPlayerID].DisplayName(nil, false);
 	else
 		msg = 'Neutralizing ' .. SelectedTerritory.Name;
 	end
