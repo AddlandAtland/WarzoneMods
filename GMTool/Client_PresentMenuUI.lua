@@ -101,6 +101,14 @@ function CheckCreateFinalStep()
         		.SetSliderMaxValue(4) -- Fixed maximum value
         		.SetValue(0);          -- Default to 0
 
+		-- row5 for cities modifier
+		local row5 = UI.CreateHorizontalLayoutGroup(vert);
+		UI.CreateLabel(row5).SetText("Income value modifier: ");
+		IncomeInput = UI.CreateNumberInputField(row5)
+			.SetSliderMinValue(-30)  -- Fixed minimum value
+        		.SetSliderMaxValue(30) -- Fixed maximum value
+        		.SetValue(0);          -- Default to 0
+
 		SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
 	end
 
