@@ -116,7 +116,7 @@ function SubmitClicked()
 		msg = 'Neutralizing ' .. SelectedTerritory.Name;
 	end
 
-	local payload = 'GMTool_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID .. ',' .. CitiesInput;
+	local payload = 'GMTool_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID .. ',' .. CitiesInput.GetValue();
 
 	local orders = Game.Orders;
 	table.insert(orders, WL.GameOrderCustom.Create(Game.Us.ID, msg, payload));
