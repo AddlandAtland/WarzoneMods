@@ -92,9 +92,16 @@ function CheckCreateFinalStep()
 			.SetSliderMinValue(-15)  -- Fixed minimum value
         		.SetSliderMaxValue(15) -- Fixed maximum value
         		.SetValue(0);          -- Default to 0
+		
+		-- row4 for cities modifier
+		local row4 = UI.CreateHorizontalLayoutGroup(vert);
+		UI.CreateLabel(row4).SetText("Cities value modifier: ");
+		CitiesInput = UI.CreateNumberInputField(row3)
+			.SetSliderMinValue(-15)  -- Fixed minimum value
+        		.SetSliderMaxValue(15) -- Fixed maximum value
+        		.SetValue(0);          -- Default to 0
 
 		SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
-	
 	end
 
 end
@@ -104,7 +111,7 @@ function SubmitClicked()
 
 	local msg = ""
 	if (TargetPlayerID ~= WL.PlayerID.Neutral) then
-		msg = 'Modifying ' .. SelectedTerritory.Name;
+		msg = 'Modifying ' .. SelectedTerritory.Name  .. ' New Owner: ' .. game.Game.Players[TargetPlayerID].DisplayName(nil, false);
 	else
 		msg = 'Neutralizing ' .. SelectedTerritory.Name;
 	end
