@@ -91,7 +91,7 @@ end
 		targetModifier.SetOwnerOpt = targetPlayerID
 
 		--add income to destination player
-		if incomeMod ~= 0 and targetPlayerID == WL.PlayerID.Neutral then
+		if incomeMod ~= 0 and targetPlayerID ~= WL.PlayerID.Neutral then
 			local incomeMod = WL.IncomeMod.Create(targetPlayerID, numIncome, 'Income added to ' .. game.Game.Players[targetPlayerID].DisplayName(nil, false));
 		end
 		
