@@ -80,12 +80,11 @@ end
 	--clear/add cities
     	if targetPlayerID == WL.PlayerID.Neutral then
     		cities[WL.StructureType.City] = 0 
+		targetModifier.SetStructuresOpt = cities
 	else
-		cities[WL.StructureType.City] = numCities 
+		cities[WL.StructureType.City] = numCities
+		targetModifier.AddStructuresOpt = cities
 	end
-    	-- Apply the modification
-    	targetModifier.SetStructuresOpt = cities
-
 
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID
