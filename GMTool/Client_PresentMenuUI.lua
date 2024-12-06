@@ -9,7 +9,7 @@ function Client_PresentMenuUI(rootParent, setMaxSize, setScrollable, game)
 	Game = game;
 	SubmitBtn = nil;
 	
-	setMaxSize(450, 600);
+	setMaxSize(450, 500);
 
 	vert = UI.CreateVerticalLayoutGroup(rootParent);
 
@@ -96,7 +96,7 @@ function CheckCreateFinalStep()
 		-- row4 for cities modifier
 		local row4 = UI.CreateHorizontalLayoutGroup(vert);
 		UI.CreateLabel(row4).SetText("Cities value modifier: ");
-		CitiesInput = UI.CreateNumberInputField(row3)
+		CitiesInput = UI.CreateNumberInputField(row4)
 			.SetSliderMinValue(-15)  -- Fixed minimum value
         		.SetSliderMaxValue(15) -- Fixed maximum value
         		.SetValue(0);          -- Default to 0
