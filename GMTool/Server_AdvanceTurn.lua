@@ -12,6 +12,7 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		local targetTerritoryID = tonumber(payloadSplit[2]);
 		local targetPlayerID = tonumber(payloadSplit[3]);
 		local numCities = tonumber(payloadSplit[4]);
+		local numIncome = tonumber(payloadSplit[5]);
 		local message = "" --checkthis!
 		--host check
 		if (order.PlayerID ~= gmos) then
@@ -88,8 +89,11 @@ end
 
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID
+
+		--add income to destination player
+		local incomeMod = WL.IncomeMod.Create(targetPlayerID, numIncome, 'Income added to ' .. game.Game.Players[targetPlayerID].DisplayName(nil, false));
 		
-		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, nil));
+		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, {incomeMod}));
 
 		skipThisOrder(WL.ModOrderControl.SkipAndSupressSkippedMessage); --we replaced the GameOrderCustom with a GameOrderEvent, so get rid of the custom order.  There wouldn't be any harm in leaving it there, but it adds clutter to the orders list so it's better to get rid of it.
 	end
