@@ -117,8 +117,10 @@ end
 function SubmitClicked()
 	if (SelectedTerritory == nil or TargetPlayerID == nil) then return; end;
 
+	local OrignID = Game.ServerGame.LatestTurnStanding.Territories[SelectedTerritory.ID].TerritoryStanding.OwnerPlayerID
+	
 	local msg = ""
-	if (TargetPlayerID ~= WL.PlayerID.Neutral) and TargetPlayerID == Game.Game.TerritoryStanding.OwnerPlayerID then
+	if (TargetPlayerID ~= WL.PlayerID.Neutral) and TargetPlayerID == OrignID then
 		msg = 'Modifying ' .. SelectedTerritory.Name  .. ' New Owner: ' .. Game.Game.Players[TargetPlayerID].DisplayName(nil, false);
 	else
 		msg = 'Neutralizing ' .. SelectedTerritory.Name;
