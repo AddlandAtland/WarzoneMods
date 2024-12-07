@@ -117,7 +117,7 @@ end
 function SubmitClicked()
 	if (SelectedTerritory == nil or TargetPlayerID == nil) then return; end;
 
-	local OrignID = game.ServerGame.LatestTurnStanding.Territories[SelectedTerritory.ID].TerritoryStanding.OwnerPlayerID
+	local OrignID = game.ServerGame.LatestTurnStanding.Territories[SelectedTerritory.ID].OwnerPlayerID
 	
 	local msg = ""
 	if (TargetPlayerID ~= WL.PlayerID.Neutral) and TargetPlayerID == OrignID then
