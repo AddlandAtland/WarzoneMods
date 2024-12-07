@@ -12,8 +12,9 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		local targetTerritoryID = tonumber(payloadSplit[2]);
 		local targetPlayerID = tonumber(payloadSplit[3]);
 		local numCities = tonumber(payloadSplit[4]);
-		local numIncome = tonumber(payloadSplit[5]);
+		--local numIncome = tonumber(payloadSplit[5]); --Income Modifier (disabled)
 		local message = "" --checkthis!
+		
 		--host check
 		if (order.PlayerID ~= gmos) then
 			skipThisOrder(WL.ModOrderControl.Skip);
@@ -90,12 +91,12 @@ end
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID
 
-		--add income to destination player
-		if incomeMod ~= 0 and targetPlayerID ~= WL.PlayerID.Neutral then
-			incomeMod = WL.IncomeMod.Create(targetPlayerID, numIncome, 'Income added to ' .. game.Game.Players[targetPlayerID].DisplayName(nil, false));
-		else
-			incomeMod = nil
-		end
+		--add income to destination player (disabled)
+		--if incomeMod ~= 0 and targetPlayerID ~= WL.PlayerID.Neutral then
+		--	incomeMod = WL.IncomeMod.Create(targetPlayerID, numIncome, 'Income added to ' .. game.Game.Players[targetPlayerID].DisplayName(nil, false));
+		--else
+		--	incomeMod = nil
+		--end
 		
 		addNewOrder(WL.GameOrderEvent.Create(order.PlayerID, order.Message, {}, {targetModifier}, nil, {incomeMod}));
 
