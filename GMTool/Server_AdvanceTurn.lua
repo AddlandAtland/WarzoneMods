@@ -28,65 +28,70 @@ function Server_AdvanceTurn_Order(game, order, result, skipThisOrder, addNewOrde
 		--define SU marker
 		local SU = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].NumArmies.SpecialUnits
 
--- Handover special unit ownership
-if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral and targetPlayerID ~= game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID then
-    	local targetSUTransfer = WL.TerritoryModification.Create(targetTerritoryID);
-    	for _, v in pairs(SU) do
-	       	if v.proxyType == "CustomSpecialUnit" then
-            		local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
+		--handover special unit ownership
+		if SU ~= nil and #SU > 0  and targetPlayerID ~= WL.PlayerID.Neutral and targetPlayerID ~= game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID then
+    		
+			local targetSUTransfer = WL.TerritoryModification.Create(targetTerritoryID);
+		
+    			for _, v in pairs(SU) do
+	       			if v.proxyType == "CustomSpecialUnit" then
+					
+            				local builder = WL.CustomSpecialUnitBuilder.CreateCopy(v)
+				
+            				--update ownership
+            				builder.OwnerID = targetPlayerID
+            				
+            				--update moddata
+            				if v.ModData and startsWith(v.ModData, modSign(0)) then
+                				local payloadSplit = split(string.sub(v.ModData, 5), ';;')
+                				local transfer = tonumber(payloadSplit[2]) or 0
+                				if transfer > 0 then
+                    					transfer = transfer - 1
+                    					builder.ModData = modSign(0) .. payloadSplit[1] .. ';;' .. transfer .. ';;' .. table.concat(payloadSplit, ';;', 3)
+                				end
+            				end
+					
+            				targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
+            				targetSUTransfer.AddSpecialUnits = {builder.Build()}
+					
+	    				message = 'Transferring ' .. v.Name .. ' from ' .. game.Game.Players[v.OwnerID].DisplayName(nil, false) .. ' to ' .. game.Game.Players[builder.OwnerID].DisplayName(nil, false);
+				      --message = 'Transferring ' .. v.Name .. ' "'  .. v.TextOverHeadOpt .. '" from ' .. game.Game.Players[v.OwnerID].DisplayName(nil, false) .. ' to ' .. game.Game.Players[builder.OwnerID].DisplayName(nil, false);
+					
+					addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
+                				message,
+                        			nil,
+                        			{targetSUTransfer}))
+        			end
+    			end
+		end
 
-            		--update ownership
-            		builder.OwnerID = targetPlayerID
-            
-            		--update moddata
-            		if v.ModData and startsWith(v.ModData, modSign(0)) then
-                		local payloadSplit = split(string.sub(v.ModData, 5), ';;')
-                		local transfer = tonumber(payloadSplit[2]) or 0
-                		if transfer > 0 then
-                    			transfer = transfer - 1
-                    			builder.ModData = modSign(0) .. payloadSplit[1] .. ';;' .. transfer .. ';;' .. table.concat(payloadSplit, ';;', 3)
-                		end
-            		end
-
-            		targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
-            		targetSUTransfer.AddSpecialUnits = {builder.Build()}
+		--clear SU when neutralizing
+		if SU ~= nil and #SU > 0  and targetPlayerID == WL.PlayerID.Neutral then
+    			
+			local targetSUTransfer = WL.TerritoryModification.Create(targetTerritoryID);
 			
-	    		message = 'Transferring ' .. v.Name .. ' from ' .. game.Game.Players[v.OwnerID].DisplayName(nil, false) .. ' to ' .. game.Game.Players[builder.OwnerID].DisplayName(nil, false);
-			--message = 'Transferring ' .. v.Name .. ' "'  .. v.TextOverHeadOpt .. '" from ' .. game.Game.Players[v.OwnerID].DisplayName(nil, false) .. ' to ' .. game.Game.Players[builder.OwnerID].DisplayName(nil, false);
+    			for _, v in pairs(SU) do
+            			targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
 			
-			addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
-                		message,
-                        	nil,
-                        	{targetSUTransfer}))
-        	end
-    	end
-end
-
---clear SU when neutralizing
-if SU ~= nil and #SU > 0  and targetPlayerID == WL.PlayerID.Neutral then
-    	local targetSUTransfer = WL.TerritoryModification.Create(targetTerritoryID);
-    	for _, v in pairs(SU) do
-            	targetSUTransfer.RemoveSpecialUnitsOpt = {v.ID}
-			
-	    	message = 'Removing Special Units';
-		addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
-                	message,
-                        nil,
-                        {targetSUTransfer}))
-    	end
-end
-
-    	-- Safely retrieve or initialize the Structures table
-    	local cities = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].Structures or {}
-    	
-	--clear/add cities
-    	if targetPlayerID == WL.PlayerID.Neutral then
-    		cities[WL.StructureType.City] = 0 
-		targetModifier.SetStructuresOpt = cities
-	else
-		cities[WL.StructureType.City] = numCities
-		targetModifier.AddStructuresOpt = cities
-	end
+	    			message = 'Removing Special Units';
+				addNewOrder(WL.GameOrderEvent.Create(game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].OwnerPlayerID,
+                			message,
+                        		nil,
+                        		{targetSUTransfer}))
+    			end
+		end
+		
+    		-- Safely retrieve or initialize the Structures table
+    		local cities = game.ServerGame.LatestTurnStanding.Territories[targetTerritoryID].Structures or {}
+    		
+		--clear/add cities
+    		if targetPlayerID == WL.PlayerID.Neutral then
+    			cities[WL.StructureType.City] = 0 
+			targetModifier.SetStructuresOpt = cities
+		else
+			cities[WL.StructureType.City] = numCities
+			targetModifier.AddStructuresOpt = cities
+		end
 
 		--change territory ownership
 		targetModifier.SetOwnerOpt = targetPlayerID
