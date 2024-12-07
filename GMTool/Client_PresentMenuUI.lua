@@ -9,7 +9,7 @@ function Client_PresentMenuUI(rootParent, setMaxSize, setScrollable, game)
 	Game = game;
 	SubmitBtn = nil;
 	
-	setMaxSize(450, 500);
+	setMaxSize(450, 450);
 
 	vert = UI.CreateVerticalLayoutGroup(rootParent);
 
@@ -101,15 +101,15 @@ function CheckCreateFinalStep()
         		.SetSliderMaxValue(4) -- Fixed maximum value
         		.SetValue(0);          -- Default to 0
 
-		-- row5 for cities modifier
-		local row5 = UI.CreateHorizontalLayoutGroup(vert);
-		UI.CreateLabel(row5).SetText("Income value modifier: ");
-		IncomeInput = UI.CreateNumberInputField(row5)
-			.SetSliderMinValue(-30)  -- Fixed minimum value
-        		.SetSliderMaxValue(30) -- Fixed maximum value
-        		.SetValue(0);          -- Default to 0
-
-		SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
+		-- row5 for cities modifier (disabled)
+		--local row5 = UI.CreateHorizontalLayoutGroup(vert);
+		--UI.CreateLabel(row5).SetText("Income value modifier: ");
+		--IncomeInput = UI.CreateNumberInputField(row5)
+		--	.SetSliderMinValue(0)  -- Fixed minimum value
+        	--	.SetSliderMaxValue(30) -- Fixed maximum value
+        	--	.SetValue(0);          -- Default to 0
+		--
+		--SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
 	end
 
 end
@@ -124,7 +124,12 @@ function SubmitClicked()
 		msg = 'Neutralizing ' .. SelectedTerritory.Name;
 	end
 
-	local payload = 'GMTool_' .. NumArmiesInput.GetValue() .. ',' .. SelectedTerritory.ID .. ',' .. TargetPlayerID .. ',' .. CitiesInput.GetValue() .. ',' .. IncomeInput.GetValue();
+	local payload = 'GMTool_' 
+			.. NumArmiesInput.GetValue() 
+		 .. ',' .. SelectedTerritory.ID 
+		 .. ',' .. TargetPlayerID 
+		 .. ',' .. CitiesInput.GetValue(); 
+	       --.. ',' .. IncomeInput.GetValue(); (disabled)
 
 	local orders = Game.Orders;
 	table.insert(orders, WL.GameOrderCustom.Create(Game.Us.ID, msg, payload));
