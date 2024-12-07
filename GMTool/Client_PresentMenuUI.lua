@@ -108,8 +108,8 @@ function CheckCreateFinalStep()
 		--	.SetSliderMinValue(0)  -- Fixed minimum value
         	--	.SetSliderMaxValue(30) -- Fixed maximum value
         	--	.SetValue(0);          -- Default to 0
-		--
-		--SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
+		
+		SubmitBtn = UI.CreateButton(vert).SetText("Submit Change").SetOnClick(SubmitClicked);
 	end
 
 end
